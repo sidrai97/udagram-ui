@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-ui
+  labels:
+    app: udagram-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udagram-ui
+  template:
+    metadata:
+      labels:
+        app: udagram-ui
+    spec:
+      containers:
+      - name: udagram-ui
+        image: sidrai97/udagram-ui
+        ports:
+        - containerPort: 8100
