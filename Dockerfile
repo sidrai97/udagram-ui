@@ -9,18 +9,13 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-#RUN npm install @angular/cli@9.0.0 
-#RUN npm install @angular/compiler-cli@9.0.0 
-#RUN npm install @angular/compiler@9.0.0
-RUN npm install -g ionic
+RUN npm install -g @angular/cli
 
 # Copy app source
 COPY . .
 
-RUN ionic build
-
 # Bind the port that the image will run on
-EXPOSE 8100
+EXPOSE 4200
 
 # Define the Docker image's behavior at runtime
-CMD ["ionic", "serve"]
+CMD ["ng", "serve"]
