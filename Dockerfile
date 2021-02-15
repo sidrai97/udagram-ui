@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 4200
 
 # Define the Docker image's behavior at runtime
-CMD ["ng", "serve"]
+CMD ["npm", "start"]
