@@ -1,21 +1,22 @@
-FROM node:13
+FROM node:13 AS ui-build
 
-# Create app directory
 WORKDIR /usr/src/app
-
-# Install app dependencies by copying
-# package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-RUN npm install -g @angular/cli
-
-# Copy app source
 COPY . .
 
-# Bind the port that the image will run on
-EXPOSE 4200
+RUN npm install -g @angular/cli && npm install && npm run build
 
-# Define the Docker image's behavior at runtime
-CMD ["npm", "start"]
+FROM nginx:alpine
+
+#!/bin/sh
+
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=ui-build /usr/src/app/www/ /usr/share/nginx/html
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

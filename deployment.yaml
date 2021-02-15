@@ -18,4 +18,4 @@ spec:
       - name: udagram-ui
         image: sidrai97/udagram-ui
         ports:
-        - containerPort: 4200
+        - containerPort: 80
